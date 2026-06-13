@@ -13,6 +13,7 @@ Aplicación nativa para iOS y macOS de seguimiento de hábitos diarios, desarrol
   <img src="screenshots/estadisticas.png" width="19%" />
   <img src="screenshots/opciones.png" width="19%" />
 </p>
+
 ---
 
 ## Descripción
