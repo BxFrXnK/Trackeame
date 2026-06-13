@@ -6,8 +6,13 @@ Aplicación nativa para iOS y macOS de seguimiento de hábitos diarios, desarrol
 
 ## Capturas de pantalla
 
-> *Próximamente*
+| Inicio | Hábitos | Detalle |
+|--------|---------|---------|
+| ![Inicio](screenshots/home.png) | ![Hábitos](screenshots/habitos.png) | ![Detalle](screenshots/detalle.png) |
 
+| Estadísticas | Opciones |
+|-------------|---------|
+| ![Estadísticas](screenshots/estadisticas.png) | ![Opciones](screenshots/opciones.png) |
 ---
 
 ## Descripción
