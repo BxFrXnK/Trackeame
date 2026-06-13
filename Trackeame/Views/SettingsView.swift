@@ -17,11 +17,13 @@ struct SettingsView: View {
     @AppStorage("reminderEnabled") private var reminderEnabled: Bool = false
     @AppStorage("reminderHour") private var reminderHour: Int = 9
     @AppStorage("reminderMinute") private var reminderMinute: Int = 0
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false
 
     @State private var showingAddHabit = false
     @State private var habitToEdit: Habit? = nil
     @State private var showingDeleteAlert = false
     @State private var habitToDelete: Habit? = nil
+    @State private var showingOnboarding: Bool = false
 
     private var reminderTime: Date {
         Calendar.current.date(bySettingHour: reminderHour, minute: reminderMinute, second: 0, of: Date()) ?? Date()
@@ -33,6 +35,7 @@ struct SettingsView: View {
                 appearanceSection
                 notificationsSection
                 habitsSection
+                onboardingSection
                 aboutSection
             }
             .listStyle(.insetGrouped)
@@ -127,7 +130,18 @@ struct SettingsView: View {
             }
         }
     }
-
+    
+    private var onboardingSection: some View {
+        Section {
+            Button {
+                showingOnboarding = true
+            } label: {
+                Label("Ver introducción", systemImage: "hand.wave.fill")
+                    .foregroundStyle(.blue)
+            }
+        }
+    }
+    
     private var aboutSection: some View {
         Section("Acerca de") {
             LabeledContent("Versión", value: appVersion)

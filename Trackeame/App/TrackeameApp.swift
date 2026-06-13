@@ -10,9 +10,16 @@ import SwiftData
 
 @main
 struct TrackeameApp: App {
+
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding: Bool = false
+
     var body: some Scene {
         WindowGroup {
             MainTabView()
+                .sheet(isPresented: .constant(!hasSeenOnboarding)) {
+                    OnboardingView()
+                        .interactiveDismissDisabled()
+                }
         }
         .modelContainer(for: Habit.self)
     }
