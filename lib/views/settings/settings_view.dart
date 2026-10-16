@@ -355,6 +355,63 @@ class _SettingsViewState extends State<SettingsView> {
                     ),
                   ),
                 ),
+                // Sección: Copia de seguridad
+                _buildSectionHeader('Copia de seguridad'),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Card(
+                      child: Column(
+                        children: [
+                          ListTile(
+                            leading: const Icon(
+                              Icons.upload_file_rounded,
+                              color: Color(0xFF007AFF),
+                            ),
+                            title: const Text('Exportar copia de seguridad'),
+                            subtitle: const Text(
+                              'Guarda o comparte tus datos en JSON',
+                            ),
+                            onTap: () async {
+                              await widget.habitController.exportData();
+                            },
+                          ),
+                          const Divider(
+                            height: 1,
+                            indent: 20,
+                            endIndent: 20,
+                            color: Color(0xFFE5E5EA),
+                          ),
+                          ListTile(
+                            leading: const Icon(
+                              Icons.download_rounded,
+                              color: Color(0xFF34C759),
+                            ),
+                            title: const Text('Restaurar copia de seguridad'),
+                            subtitle: const Text(
+                              'Carga hábitos desde un archivo JSON',
+                            ),
+                            onTap: () async {
+                              final success = await widget.habitController
+                                  .importData();
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      success
+                                          ? 'Copia de seguridad restaurada con éxito'
+                                          : 'Proceso cancelado o archivo inválido',
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ],
             );
           },

@@ -1,16 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
+import '../services/backup_service.dart';
+
 import '../models/habit_model.dart';
 import '../repositories/interfaces/i_habit_repository.dart';
 
 class HabitController extends ChangeNotifier {
   final IHabitRepository _repository;
+  late final BackupService _backupService;
 
   List<HabitModel> _habits = [];
   bool _isLoading = false;
 
-  HabitController(this._repository);
+  HabitController(this._repository) {
+    _backupService = BackupService(_repository);
+  }
 
   // Getters para que la vista lea el estado sin modificarlo directamente
   List<HabitModel> get habits => _habits;
@@ -147,5 +152,30 @@ class HabitController extends ChangeNotifier {
     }
 
     return streak;
+  }
+
+  // Métodos expuestos para la interfaz gráfica:
+  Future<void> exportData() async {
+    await _backupService.exportBackup();
+  }
+
+  Future<bool> importData() async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final imported = await _backupService.importBackup();
+      if (imported != null) {
+        await loadHabits(); // Recarga los hábitos en pantalla desde SQLite
+        return true;
+      }
+      return false;
+    } catch (e) {
+      debugPrint('Error al importar copia de seguridad: $e');
+      return false;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 }
